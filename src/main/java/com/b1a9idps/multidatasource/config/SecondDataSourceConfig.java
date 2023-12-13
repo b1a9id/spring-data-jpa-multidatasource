@@ -2,6 +2,7 @@ package com.b1a9idps.multidatasource.config;
 
 import javax.sql.DataSource;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.boot.autoconfigure.orm.jpa.JpaProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -32,27 +33,28 @@ public class SecondDataSourceConfig {
     }
 
     @Bean
-    public DataSource secondDataSource(DataSourceProperties secondDataSourceProperties) {
-        return secondDataSourceProperties.initializeDataSourceBuilder()
+    public DataSource secondDataSource(@Qualifier("secondDataSourceProperties") DataSourceProperties dataSourceProperties) {
+        return dataSourceProperties.initializeDataSourceBuilder()
                 .type(HikariDataSource.class)
                 .build();
     }
 
     @Bean
     public LocalContainerEntityManagerFactoryBean secondEntityManager(
-            DataSource secondDataSource, JpaProperties japProperties) {
+            @Qualifier("secondDataSource") DataSource dataSource, JpaProperties japProperties) {
         HibernateJpaVendorAdapter hibernateJpaVendorAdapter = new HibernateJpaVendorAdapter();
         hibernateJpaVendorAdapter.setShowSql(japProperties.isShowSql());
 
         return new EntityManagerFactoryBuilder(hibernateJpaVendorAdapter, japProperties.getProperties(), null)
-                .dataSource(secondDataSource)
+                .dataSource(dataSource)
                 .persistenceUnit("secondTransactionManager")
-                .packages("com.b1a9idps.multidatasource.entity")
+                .packages("com.b1a9idps.multidatasource.entity.second")
                 .build();
     }
 
     @Bean
-    public JpaTransactionManager secondTransactionManager(EntityManagerFactory secondEntityManager) {
-        return new JpaTransactionManager(secondEntityManager);
+    public JpaTransactionManager secondTransactionManager(
+            @Qualifier("secondEntityManager") EntityManagerFactory entityManagerFactory) {
+        return new JpaTransactionManager(entityManagerFactory);
     }
 }
