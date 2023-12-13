@@ -4,6 +4,8 @@ import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
+import org.springframework.boot.autoconfigure.orm.jpa.HibernateProperties;
+import org.springframework.boot.autoconfigure.orm.jpa.HibernateSettings;
 import org.springframework.boot.autoconfigure.orm.jpa.JpaProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
@@ -45,11 +47,12 @@ public class FirstDataSourceConfig {
     @Bean
     @Primary
     public LocalContainerEntityManagerFactoryBean firstEntityManager(
-            @Qualifier("firstDataSource") DataSource dataSource, JpaProperties japProperties) {
+            @Qualifier("firstDataSource") DataSource dataSource, JpaProperties japProperties, HibernateProperties hibernateProperties) {
         HibernateJpaVendorAdapter hibernateJpaVendorAdapter = new HibernateJpaVendorAdapter();
         hibernateJpaVendorAdapter.setShowSql(japProperties.isShowSql());
+        var properties = hibernateProperties.determineHibernateProperties(japProperties.getProperties(), new HibernateSettings());
 
-        return new EntityManagerFactoryBuilder(hibernateJpaVendorAdapter, japProperties.getProperties(), null)
+        return new EntityManagerFactoryBuilder(hibernateJpaVendorAdapter, properties, null)
                 .dataSource(dataSource)
                 .persistenceUnit("firstTransactionManager")
                 .packages("com.b1a9idps.multidatasource.entity.first")
