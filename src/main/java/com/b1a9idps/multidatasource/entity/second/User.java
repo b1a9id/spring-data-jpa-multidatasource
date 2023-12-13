@@ -1,4 +1,4 @@
-package com.b1a9idps.multidatasource.entity;
+package com.b1a9idps.multidatasource.entity.second;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

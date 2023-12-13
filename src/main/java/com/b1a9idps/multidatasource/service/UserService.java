@@ -2,7 +2,7 @@ package com.b1a9idps.multidatasource.service;
 
 import org.springframework.stereotype.Service;
 
-import com.b1a9idps.multidatasource.entity.User;
+import com.b1a9idps.multidatasource.entity.second.User;
 import com.b1a9idps.multidatasource.repository.second.UserRepository;
 
 @Service

@@ -4,7 +4,7 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.b1a9idps.multidatasource.entity.User;
+import com.b1a9idps.multidatasource.entity.second.User;
 
 public interface UserRepository extends JpaRepository<User, Integer> {
 

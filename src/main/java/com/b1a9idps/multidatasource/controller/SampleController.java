@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.b1a9idps.multidatasource.entity.Shop;
+import com.b1a9idps.multidatasource.entity.first.Shop;
 import com.b1a9idps.multidatasource.request.ShopCreateRequest;
 import com.b1a9idps.multidatasource.response.ShopResponse;
 import com.b1a9idps.multidatasource.service.ShopService;
