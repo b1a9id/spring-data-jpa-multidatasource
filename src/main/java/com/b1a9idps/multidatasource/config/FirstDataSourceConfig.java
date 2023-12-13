@@ -11,7 +11,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -30,14 +29,12 @@ import jakarta.persistence.EntityManagerFactory;
 public class FirstDataSourceConfig {
 
     @Bean
-    @Primary
     @ConfigurationProperties("spring.datasource.first")
     public DataSourceProperties firstDataSourceProperties() {
         return new DataSourceProperties();
     }
 
     @Bean
-    @Primary
     public DataSource firstDataSource(@Qualifier("firstDataSourceProperties") DataSourceProperties dataSourceProperties) {
         return dataSourceProperties.initializeDataSourceBuilder()
                 .type(HikariDataSource.class)
@@ -45,7 +42,6 @@ public class FirstDataSourceConfig {
     }
 
     @Bean
-    @Primary
     public LocalContainerEntityManagerFactoryBean firstEntityManager(
             @Qualifier("firstDataSource") DataSource dataSource, JpaProperties japProperties, HibernateProperties hibernateProperties) {
         HibernateJpaVendorAdapter hibernateJpaVendorAdapter = new HibernateJpaVendorAdapter();
