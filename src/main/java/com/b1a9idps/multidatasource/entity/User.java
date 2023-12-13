@@ -15,6 +15,8 @@ public class User {
 
     private Integer age;
 
+    private Integer shopId;
+
     public int getId() {
         return id;
     }
@@ -37,5 +39,13 @@ public class User {
 
     public void setAge(Integer age) {
         this.age = age;
+    }
+
+    public Integer getShopId() {
+        return shopId;
+    }
+
+    public void setShopId(Integer shopId) {
+        this.shopId = shopId;
     }
 }
