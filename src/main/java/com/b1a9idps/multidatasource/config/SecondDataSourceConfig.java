@@ -20,7 +20,7 @@ import jakarta.persistence.EntityManagerFactory;
 @Configuration(proxyBeanMethods = false)
 @EnableJpaRepositories(
         basePackages = "com.b1a9idps.multidatasource.repository.second",
-        entityManagerFactoryRef = "secondEntityManagerFactory",
+        entityManagerFactoryRef = "secondEntityManager",
         transactionManagerRef = "secondTransactionManager"
 )
 public class SecondDataSourceConfig {
@@ -39,7 +39,7 @@ public class SecondDataSourceConfig {
     }
 
     @Bean
-    public LocalContainerEntityManagerFactoryBean secondEntityManagerFactory(
+    public LocalContainerEntityManagerFactoryBean secondEntityManager(
             DataSource secondDataSource, JpaProperties japProperties) {
         HibernateJpaVendorAdapter hibernateJpaVendorAdapter = new HibernateJpaVendorAdapter();
         hibernateJpaVendorAdapter.setShowSql(japProperties.isShowSql());
@@ -52,7 +52,7 @@ public class SecondDataSourceConfig {
     }
 
     @Bean
-    public JpaTransactionManager secondTransactionManager(EntityManagerFactory secondEntityManagerFactory) {
-        return new JpaTransactionManager(secondEntityManagerFactory);
+    public JpaTransactionManager secondTransactionManager(EntityManagerFactory secondEntityManager) {
+        return new JpaTransactionManager(secondEntityManager);
     }
 }
