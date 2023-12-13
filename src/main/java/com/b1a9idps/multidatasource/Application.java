@@ -1,13 +1,13 @@
-package com.b1a9idps.springdatajpamultidatasource;
+package com.b1a9idps.multidatasource;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class SpringDataJpaMultidatasourceApplication {
+public class Application {
 
 	public static void main(String[] args) {
-		SpringApplication.run(SpringDataJpaMultidatasourceApplication.class, args);
+		SpringApplication.run(Application.class, args);
 	}
 
 }
