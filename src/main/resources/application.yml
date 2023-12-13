@@ -1,1 +1,12 @@
-
+spring:
+  datasource:
+    first:
+      url: jdbc:mysql://localhost:33306/db1
+      username: root
+      password: root
+    second:
+      url: jdbc:mysql://localhost:33307/db2
+      username: root
+      password: root
+  jpa:
+    open-in-view: false
