@@ -33,10 +33,10 @@ public class SampleController {
 
         List<ShopResponse> shopResponses = new ArrayList<>();
         for (Shop shop : shops) {
-            var user = userService.findByShopId(shop.getId());
-
-            var userResponse = new ShopResponse.UserResponse(user.getId(), user.getName(), user.getAge());
-            shopResponses.add(new ShopResponse(shop.getId(), shop.getName(), userResponse));
+            var users = userService.findAllByShopId(shop.getId()).stream()
+                    .map(user -> new ShopResponse.UserResponse(user.getId(), user.getName(), user.getAge()))
+                    .toList();
+            shopResponses.add(new ShopResponse(shop.getId(), shop.getName(), users));
         }
 
         return shopResponses;
@@ -45,8 +45,9 @@ public class SampleController {
     @PostMapping("/shops")
     public ShopResponse createShop(@RequestBody ShopCreateRequest request) {
         var shop = shopService.createShop(request);
-        var user = userService.findByShopId(shop.getId());
-        var userResponse = new ShopResponse.UserResponse(user.getId(), user.getName(), user.getAge());
-        return new ShopResponse(shop.getId(), shop.getName(), userResponse);
+        var users = userService.createUsers(shop.getId()).stream()
+                .map(user -> new ShopResponse.UserResponse(user.getId(), user.getName(), user.getAge()))
+                .toList();
+        return new ShopResponse(shop.getId(), shop.getName(), users);
     }
 }
